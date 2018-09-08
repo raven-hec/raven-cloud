@@ -51,7 +51,7 @@ def list_users():
 def get_user(user_id):
 	return list_user(user_id)
 
-def list_user(user_id)：
+def list_user(user_id):
 	conn = sqlite3.connect("mydb.db")
 	print ("Opened database successfully");
 	api_list=[]
@@ -67,7 +67,7 @@ def list_user(user_id)：
 		user['id'] = data[0][4]
 	conn.close()
 	return jsonify(a_dict)
-	
+
 
 if __name__ == '__main__':
   app.run(host='0.0.0.0', port=5000, debug=True)
