@@ -155,7 +155,7 @@ def upd_user(user):
 	conn = sqlite3.connect('mydb.db')
 	print("Opened database sucessfully");
 	cusor = conn.cursor()
-	cursor.execute("SELECT * FROM users WHERE id=?", (user['id'],))
+	cursor.execute("SELECT * FROM users WHERE id=? ", (user['id'],))
 	data = cursor.fetchall()
 	print(data)
 
@@ -166,7 +166,8 @@ def upd_user(user):
 		for i in key_list:
 			if i != "id":
 				print(user, i)
-				cursor.execute("""UPDATE users SET {0}=? WHERE id=?""".format(i),（user[i], user['id'],))
+				cursor.execute("UPDATE users SET {0} = ? WHERE id = ?", (i, user[i], user['id']))
+				#cursor.execute("""UPDATE users SET {0} = ? WHERE id = ?""".format(i),（user[i], user['id']))
 				conn.commit()
 		return "Sucess"
 
