@@ -147,7 +147,7 @@ def update_user(user_id):
 	user['id'] = user_id
 	key_list = request.json.keys()
 	for i in key_list:
-		user[i] = reuest.json[i]
+		user[i] = request.json[i]
 	print(user)
 	return jsonify({'status': upd_user(user)}), 200
 
