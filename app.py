@@ -138,6 +138,37 @@ def del_user(del_user):
 		conn.commit()
 		return "Sucess"
 
+@app.route('/api/v1/users/<int:user_id>', methods=['PUT'])
+def update_user(user_id):
+	user = {}
+	if not request.json:
+		abort(4000)
+	
+	user['id'] = user_id
+	key_list = request.json:keys()
+	for i in key_list:
+		user[i] = reuest.json[i]
+	print(user)
+	return jsonify({'status': upd_user(user)}), 200
+
+def upd_user(user):
+	conn = sqlite3.connect('mydb.db')
+	print("Opened database sucessfully");
+	cusor = conn.cursor()
+	cursor.execute("SELECT * FROM users WHERE id=?", (user['id'],))
+	data = cursor.fetchall()
+	print(data)
+
+	if len(data) == 0:
+		abort(404)
+	else:
+		key_list = user.keys()
+		for i in key_list:
+			if i != "id":
+				print(user, i)
+				cursor.execute("""UPDATE users SET {0}=? WHERE id=?""".format(i), （user[i], user['id']))
+				conn.commit()
+		return "Sucess"
 
 @app.errorhandler(400)
 def invalid_request(error):
