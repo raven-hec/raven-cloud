@@ -68,7 +68,7 @@ def list_user(user_id):
 	api_list.append(user)
 
 	conn.close()
-	return jsonify(user)
+	return jsonify('user_list': api_list)
 
 
 if __name__ == '__main__':
