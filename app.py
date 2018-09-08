@@ -65,8 +65,10 @@ def list_user(user_id):
 		user['email'] = data[0][2]
 		user['password'] = data[0][3]
 		user['id'] = data[0][4]
+	api_list.add(user)
+
 	conn.close()
-	return jsonify(a_dict)
+	return jsonify(user)
 
 
 if __name__ == '__main__':
