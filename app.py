@@ -65,7 +65,7 @@ def list_user(user_id):
 		user['email'] = data[0][2]
 		user['password'] = data[0][3]
 		user['id'] = data[0][4]
-	api_list.add(user)
+	api_list.append(user)
 
 	conn.close()
 	return jsonify(user)
