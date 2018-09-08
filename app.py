@@ -1,6 +1,6 @@
 from flask import Flask
 from flask import jsonify
-from flask import make_reponse
+from flask import make_response
 from flask import abort
 import json
 import sqlite3
