@@ -128,7 +128,7 @@ def del_user(del_user):
 	conn = sqlite3.connect('mydb.db')
 	print("Opened database sucessfully");
 	cursor = conn.cursor()
-	cursor.execte("SELECT * FROM users WHERE username=?", (del_user,))
+	cursor.execute("SELECT * FROM users WHERE username=?", (del_user,))
 	data = cursor.fetchall()
 	print("Data", data)
 	if len(data) == 0:
