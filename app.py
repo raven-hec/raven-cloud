@@ -55,11 +55,13 @@ def list_user(user_id):
 	conn = sqlite3.connect("mydb.db")
 	print ("Opened database successfully");
 	#api_list=[]
+	user = {}
+
 	cursor = conn.cursor()
 	cursor.execute("SELECT * FROM users where id=?", (user_id,))
 	data = cursor.fetchall()
+
 	if len(data) != 0:
-		user = {}
 		user['username'] = data[0][0]
 		user['name'] = data[0][1]
 		user['email'] = data[0][2]
