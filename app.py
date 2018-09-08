@@ -54,7 +54,7 @@ def get_user(user_id):
 def list_user(user_id):
 	conn = sqlite3.connect("mydb.db")
 	print ("Opened database successfully");
-	#api_list=[]
+	api_list=[]
 
 	cursor = conn.cursor()
 	cursor.execute("SELECT * FROM users where id=?", (user_id,))
@@ -68,8 +68,10 @@ def list_user(user_id):
 		user['password'] = data[0][3]
 		user['id'] = data[0][4]
 
-			conn.close()
-			return jsonify(user)
+		api_list.append(user)
+
+	conn.close()
+	return jsonify({'user_list': api_list})
 	#api_list.append(user)
 
 
