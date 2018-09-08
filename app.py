@@ -108,16 +108,41 @@ def add_user(new_user):
 		a_dict['password'] = row[3]
 		a_dict['id'] = row[4]
 		api_list.append(a_dict)
-
 		abort(409)
 	else:
 		cursor.execute("INSERT INTO users(username,emailid,password,full_name) VALUES(?,?,?,?)", (new_user['username'],
 		 new_user['email'], new_user['password'], new_user['name']))
 		conn.commit()
 		return "Sucess"
-
 	conn.close()
 	return jsonify(api_list)
+
+@app.route('/api/v1/users', methods=['DELETE'])
+def delete_user():
+	if not request.json or not 'username' in request.json: 
+		abort(400)
+	user = request.json['username']
+	return jsonify({'status': del_user(user)}), 200
+
+def del_user(del_user):
+	conn = sqlite3.connect('mydb.db')
+	print("Opened database sucessfully");
+	cursor = conn.cursor()
+	cursor.execte("SELECT * FROM users WHERE username=?", (del_user,))
+	data = cursor.fetchall()
+	print("Data", data)
+	if len(data) == 0:
+		abort(404)
+	else:
+		cursor.execute("DELETE FROM users WHERE username=?", (del_user,))
+		conn.commit()
+		return "Sucess"
+
+
+@app.errorhandler(400)
+def invalid_request(error):
+	return make_response(jsonify({'error': 
+		'Bad Request'}), 400)
 
 @app.errorhandler(404)
 def resource_not_found(error):
