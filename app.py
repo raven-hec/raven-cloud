@@ -47,7 +47,7 @@ def list_users():
 	return jsonify({'user_list': api_list})
 
 
-@app.route("/api/v1/users/<int: user_id>", methods=["GET"])
+@app.route("/api/v1/users/<int:user_id>", methods=["GET"])
 def get_user(user_id):
 	return list_user(user_id)
 
