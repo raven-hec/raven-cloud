@@ -1,5 +1,7 @@
 from flask import Flask
 from flask import jsonify
+from flask import make_reponse
+from flask import abort
 import json
 import sqlite3
 
@@ -74,6 +76,52 @@ def list_user(user_id):
 	return jsonify({'user_list': api_list})
 	#api_list.append(user)
 
+##-----新建用户----##
+@app.route('/api/v1/users', methods['POST'])
+def creatre_user():
+	if not request.json or not 'username' in request.json or not 'email' in request.json or not 'password' in request.json:
+		abort(4000)
+
+	user = {
+		'username': request.json['username'],
+		'email': request.json['email'],
+		'name': request.json.get('name'""),
+		'password': request.json['password']
+	}
+
+	return jsonify({'status': add_user(user)}), 201
+
+def add_user(new_user):
+	conn = sqlite3.connect('mydb.db')
+	print("Opened database successfully");
+	api_list = []
+	cursor = conn.cursor()
+	cursor.execute("SELECT username, full_name, emailid, password, id FROM users WHERE username=? or emailid=?", (new_user['username'], new_user['email']))
+	data = cursor.fetchall()
+
+	if len(data) != 0:
+		a_dict = {}
+		a_dict['username'] = row[0]
+		a_dict['name'] = row[1]
+		a_dict['email'] = row[2]
+		a_dict['password'] = row[3]
+		a_dict['id'] = row[4]
+		api_list.append(a_dict)
+
+		abort(409)
+	else:
+		cursor.execute("INSERT INTO users(username,emailid,password,full_name) VALUES(?,?,?,?)", (new_user['username'],
+		 new_user['email'], new_user['password'], new_user['name']))
+		conn.commit()
+		return "Sucess"
+
+	conn.close()
+	return jsonify(api_list)
+
+@app.errorhandler(404)
+def resource_not_found(error):
+	return make_reponse(jsonify({'error':
+		'Resource not found'}), 404)
 
 
 if __name__ == '__main__':
