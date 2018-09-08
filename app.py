@@ -77,7 +77,7 @@ def list_user(user_id):
 	#api_list.append(user)
 
 ##-----新建用户----##
-@app.route('/api/v1/users', methods['POST'])
+@app.route('/api/v1/users', methods=['POST'])
 def creatre_user():
 	if not request.json or not 'username' in request.json or not 'email' in request.json or not 'password' in request.json:
 		abort(4000)
