@@ -145,7 +145,7 @@ def update_user(user_id):
 		abort(4000)
 	
 	user['id'] = user_id
-	key_list = request.json:keys()
+	key_list = request.json.keys()
 	for i in key_list:
 		user[i] = reuest.json[i]
 	print(user)
