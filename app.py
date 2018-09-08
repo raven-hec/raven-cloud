@@ -154,7 +154,7 @@ def update_user(user_id):
 def upd_user(user):
 	conn = sqlite3.connect('mydb.db')
 	print("Opened database sucessfully");
-	cusor = conn.cursor()
+	cursor = conn.cursor()
 	cursor.execute("SELECT * FROM users WHERE id=? ", (user['id'],))
 	data = cursor.fetchall()
 	print(data)
