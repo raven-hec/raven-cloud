@@ -2,6 +2,7 @@ from flask import Flask, request
 from flask import jsonify
 from flask import make_response, url_for
 from flask import abort
+from flask import render_template
 from pymongo import MongoClient
 from time import gmtime,strftime 
 import json
@@ -171,6 +172,11 @@ def creatre_user():
 
 	return jsonify({'status': add_user(user)}), 201
 
+### app api route
+@app.route('/adduser')
+def adduser():
+	return render_template('adduser.html')
+
 @app.route('/api/v1/users', methods=['DELETE'])
 def delete_user():
 	if not request.json or not 'username' in request.json: 
@@ -198,10 +204,10 @@ def get_tweets():
 @app.route('/api/v2/tweets', methods=['POST'])
 def add_tweets():
 	user_tweet = {}
-	if not request.json or not 'username' in request.json or not 'body' in request.json:
+	if not request.json or not 'tweetedby' in request.json or not 'body' in request.json:
 		abort(400)
 
-	user_tweet['username'] = request.json['username']
+	user_tweet['tweetedby'] = request.json['tweetedby']
 	user_tweet['body'] = request.json['body']
 	user_tweet['created_at'] = strftime("%Y-%m-%dT%H:%M:%SZ", gmtime())
 	print(user_tweet)
@@ -210,6 +216,10 @@ def add_tweets():
 @app.route('/api/v2/tweets/<int:id>', methods=['GET'])
 def get_tweet(id):
 	return list_tweet(id)
+
+@app.route('/index')
+def index():
+	return render_template('index.html')
 
 @app.errorhandler(400)
 def invalid_request(error):
