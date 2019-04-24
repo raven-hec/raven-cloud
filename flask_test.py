@@ -14,7 +14,7 @@ class FlaskappTests(unittest.TestCase):
 		result = self.app.get('/api/v2/tweets')
 		self.assertEqual(result.status_code, 200)
 
-	def test_tweets_status_code(self):
+	def test_info_status_code(self):
 		result = self.app.get('/api/v1/info')
 		self.assertEqual(result.status_code, 200)
 
